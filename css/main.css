@@ -1,0 +1,217 @@
+
+/* ====== Reset & Base ====== */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;line-height:1.6;color:#1b1f23;background:#f6f8fa}
+a{color:#0b63c8;text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;height:auto;display:block}
+
+/* ====== Layout ====== */
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+.header{position:sticky;top:0;background:#ffffffcc;backdrop-filter:saturate(1.2) blur(6px);border-bottom:1px solid #e5e7eb;z-index:50}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{height:70px}
+.nav{display:flex;gap:18px}
+.nav a{font-weight:600;color:#111827;padding:8px 10px;border-radius:10px;transition:all .2s ease}
+.nav a:hover{background:#eef2ff;color:#1e3a8a;transform:translateY(-1px)}
+
+.hero{background:linear-gradient(135deg,#e8eefc 0%,#ffffff 100%);padding:80px 0}
+.hero h1{font-size:clamp(28px,3.5vw,48px);margin:0 0 10px;color:#0f172a}
+.hero p{font-size:clamp(16px,2vw,20px);color:#334155;margin:0 0 24px}
+.btn{display:inline-block;padding:12px 18px;border-radius:14px;background:#1e40af;color:white;font-weight:700;transition:transform .15s ease, box-shadow .15s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(30,64,175,.25)}
+
+/* Cards grid */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.card{background:white;border:1px solid #e5e7eb;border-radius:18px;overflow:hidden;box-shadow:0 10px 20px rgba(2,6,23,.04);transition:transform .2s ease, box-shadow .2s ease}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 28px rgba(2,6,23,.08)}
+.card .media{aspect-ratio:16/10;background:#f1f5f9;overflow:hidden}
+.card .body{padding:16px}
+.card h3{margin:0 0 8px;font-size:18px;color:#0f172a}
+.card p{margin:0;color:#694747}
+
+/* Footer */
+footer{background:#0b1220;color:#cbd5e1;margin-top:40px}
+.footer-top{padding:32px 0;border-top:1px solid #1f2937;border-bottom:1px solid #1f2937}
+.footer-cols{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:20px}
+.footer-brand img{height:70px;margin-bottom:8px}
+footer a{color:#cbd5e1}
+.footer-bottom{padding:14px 0;color:#94a3b8;font-size:14px}
+
+/* WhatsApp floating button */
+.whatsapp-float{position:fixed;right:18px;bottom:18px;z-index:60;background:#25D366;color:white;border-radius:999px;padding:14px 18px;font-weight:800;box-shadow:0 10px 24px rgba(0,0,0,.2)}
+.whatsapp-float:hover{filter:brightness(1.05)}
+
+/* Responsive */
+@media (max-width:960px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .brand img{height:60px}
+}
+@media (max-width:640px){
+  .nav{display:none}
+  .grid{grid-template-columns:1fr}
+  .brand img{height:56px}
+}
+
+.nosotros {
+    position: relative;
+    background: url("../img/imgfondonosotros.png") no-repeat center center/cover;
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+    min-height: 100vh;
+}
+
+
+.nosotros .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(13, 11, 80); /* Capa oscura para que el texto sea legible */
+}
+
+.nosotros .contenido {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.nosotros h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #8faf12; /* Amarillo para resaltar títulos */
+}
+
+.nosotros p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+/* LOGO EN HEADER */
+.header .brand img {
+  height: 120px;   /* más grande (puedes subir a 150px si quieres) */
+  width: auto;     /* mantiene proporción */
+}
+
+/* LOGO EN FOOTER */
+.footer-brand img {
+  height: 100px;   /* más grande en el footer */
+  width: auto;
+}
+/* ==== GALERÍA ESTILO LAMBORGHINI ==== */
+.galeria {
+  padding: 50px 5%;
+  background: #f9f9f9;
+}
+
+.galeria h2 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #222;
+  font-weight: 600;
+}
+
+.grid-galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.grid-galeria img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: pointer;
+}
+
+.grid-galeria img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+}
+
+/* ==== GALERÍA ESTILO LAMBORGHINI ==== */
+.galeria {
+  padding: 50px 5%;
+  background: #f9f9f9;
+}
+
+.galeria h2 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #222;
+  font-weight: 600;
+}
+
+.grid-galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.grid-galeria img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: pointer;
+}
+
+.grid-galeria img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+}
+
+/* ==== LIGHTBOX ==== */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  padding-top: 50px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.9);
+}
+
+.lightbox-contenido {
+  margin: auto;
+  display: block;
+  max-width: 90%;
+  max-height: 80vh;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}
+
+.cerrar {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cerrar:hover {
+  color: #ff4444;
+}
+
+
+
+
+
+
