@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Página no encontrada · PROSMEC S.A.S.</title>
+<link rel="icon" href="/favicon.ico">
+<style>body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;display:grid;place-content:center;min-height:100vh;margin:0;background:#f6f7f9;color:#1b1f23}.card{background:#fff;padding:2rem 2.25rem;border-radius:1rem;box-shadow:0 10px 30px rgba(0,0,0,.08);text-align:center;max-width:560px}a.button{display:inline-block;margin-top:1rem;padding:.7rem 1rem;border-radius:.75rem;text-decoration:none;background:#0b4f6c;color:white}</style>
+
+<style>
+  #btnTop {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    z-index: 999;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: opacity 0.3s ease-in-out, background 0.3s;
+  }
+  #btnTop:hover {
+    background: #0056b3;
+  }
+  @media (max-width: 768px) {
+    #btnTop {
+      bottom: 100px;
+      width: 45px;
+      height: 45px;
+      font-size: 20px;
+    }
+  }
+</style>
+
+</head><body><div class="card"><h1>404</h1><p>La página que buscas no existe o fue movida.</p><a class="button" href="/">Volver al inicio</a></div><button id="back-to-top" aria-label="Volver arriba">↑</button>
+
+<!-- Botón Volver Arriba -->
+<button id="btnTop" aria-label="Volver arriba" title="Volver arriba">⬆</button>
+
+<script>
+  const btnTop = document.getElementById("btnTop");
+  window.addEventListener("scroll", () => {
+    if (document.documentElement.scrollTop > 300) {
+      btnTop.style.display = "block";
+    } else {
+      btnTop.style.display = "none";
+    }
+  });
+  btnTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+</script>
+
+</body></html>

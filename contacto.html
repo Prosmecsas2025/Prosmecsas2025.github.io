@@ -7,12 +7,56 @@
   <link rel="stylesheet" href="css/main.css">
   <script defer src="js/main.js"></script>
   <link rel="icon" href="img/logo.webp">
+
+  <meta name="description" content="Mecanizado, soldadura, mantenimiento y suministros industriales. PROSMEC S.A.S.">
+  <meta property="og:title" content="Contacto · PROSMEC S.A.S.">
+  <meta property="og:description" content="Soluciones metalmecánicas para la industria. Calidad y cumplimiento.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PROSMEC S.A.S.">
+  <meta property="og:image" content="/img/logo.webp">
+  <link rel="canonical" href="/">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "PROSMEC S.A.S.", "url": "/", "logo": "/img/logo.webp"}</script>
+<style>
+  #btnTop {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    z-index: 999;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: opacity 0.3s ease-in-out, background 0.3s;
+  }
+  #btnTop:hover {
+    background: #0056b3;
+  }
+  @media (max-width: 768px) {
+    #btnTop {
+      bottom: 100px;
+      width: 45px;
+      height: 45px;
+      font-size: 20px;
+    }
+  }
+</style>
+
 </head>
 <body>
+  <a href="#main" id="skip-to-content">Saltar al contenido principal</a>
 <header class="header">
   <div class="container header-inner">
     <div class="brand">
-      <a href="index.html"><img src="img/logo.webp" alt="PROSMEC SAS"></a>
+      <a href="index.html"><img loading="lazy" decoding="async" src="img/logo.webp" alt="PROSMEC SAS" width="800" height="800"></a>
       <strong>PROSMEC S.A.S.</strong>
     </div>
     <nav class="nav">
@@ -23,6 +67,7 @@
     </nav>
   </div>
 </header>
+<main id="main" role="main">
 
 <section class="container" style="padding:40px 0">
   <h1>Contacto</h1>
@@ -39,7 +84,7 @@
   <div class="footer-top">
     <div class="container footer-cols">
       <div class="footer-brand">
-        <img src="img/logo.webp" alt="PROSMEC SAS">
+        <img loading="lazy" decoding="async" src="img/logo.webp" alt="PROSMEC SAS" width="800" height="800">
         <p>Procesos y Suministros Metalmecánicos</p>
       </div>
       <div>
@@ -58,8 +103,29 @@
   <div class="container footer-bottom">
     <p>© 2025 PROSMEC S.A.S. · Todos los derechos reservados</p>
   </div>
+</main>
 </footer>
 <a class="whatsapp-float" href="https://wa.me/573145693906" target="_blank">WhatsApp</a>
+
+
+<button id="back-to-top" aria-label="Volver arriba" style="position:fixed;right:1rem;bottom:1rem;display:none;padding:.6rem .8rem;border-radius:9999px;border:none;box-shadow:0 2px 10px rgba(0,0,0,.15);cursor:pointer;z-index:9999">↑</button>
+
+<!-- Botón Volver Arriba -->
+<button id="btnTop" aria-label="Volver arriba" title="Volver arriba">⬆</button>
+
+<script>
+  const btnTop = document.getElementById("btnTop");
+  window.addEventListener("scroll", () => {
+    if (document.documentElement.scrollTop > 300) {
+      btnTop.style.display = "block";
+    } else {
+      btnTop.style.display = "none";
+    }
+  });
+  btnTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+</script>
 
 </body>
 </html>
