@@ -71,7 +71,7 @@
 
 <section class="hero">
   <div class="container">
-    <h1>🔧Soluciones Metalmecánicas Para La Industria🔧</h1>
+    <h1>Soluciones Metalmecánicas Para La Industria</h1>
     <p>Mantenimiento, mecanizado, soldadura y suministros industriales con calidad y cumplimiento.</p>
     <a href="servicios.html" class="btn">Ver servicios</a>
   </div>
@@ -79,17 +79,22 @@
 
 
 <section class="galeria">
- <h2>🧑🏼‍🏭🔧🔩ESTOS SON ALGUNOS DE NUESTROS TRABAJOS REALIZADOS🔩🔧🧑🏼‍🏭</h2>
+ <h2></h2>
   <div class="grid-galeria">
-    <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-20 a las 08.03.25_879fe14e.webp" alt="Trabajo 1" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-19 a las 00.13.40_82c0d9eb.webp" alt="Trabajo 2" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-29 a las 22.53.20_16baab5c.webp" alt="Trabajo 3" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-29 a las 23.11.32_4b38b962 (1).webp" alt="Trabajo 4" width="861" height="1080">
-    <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-20 a las 08.03.24_839de877.webp" alt="Trabajo 5" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-27 a las 09.02.25_1d95b30d.webp" alt="Trabajo 6" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-19 a las 09.33.20_ce13389d.webp" alt="Trabajo 7" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-29 a las 22.53.20_ef892583.webp" alt="Trabajo 8" width="1200" height="1600">
+    <img loading="lazy" decoding="async" src="img/imagen1.jpg" alt="Trabajo 1" width="1200" height="1600">
+    <img loading="lazy" decoding="async" src="img/imagen2.jpg" alt="Trabajo 2" width="1200" height="1600">
+    <img loading="lazy" decoding="async" src="img/imagen3.jpg" alt="Trabajo 3" width="1200" height="1600">
+    <img loading="lazy" decoding="async" src="img/imagen4.jpg" alt="Trabajo 4" width="861" height="1080">
+    <img loading="lazy" decoding="async" src="img/imagen5.jpg" alt="Trabajo 3" width="1200" height="1600">
+    <img loading="lazy" decoding="async" src="img/imagen6.jpg" alt="Trabajo 5" width="1200" height="1600">
+    <img loading="lazy" decoding="async" src="img/imagen7.jpg" alt="Trabajo 6" width="1200" height="1600">
+    <img loading="lazy" decoding="async" src="img/imagen8.jpg" alt="Trabajo 7" width="1200" height="1600">
+    <img loading="lazy" decoding="async" src="img/imagen9.jpg" alt="Trabajo 7" width="1200" height="1600">
+    <img loading="lazy" decoding="async" src="img/imagen10.jpg" alt="Trabajo 7" width="1200" height="1600">
+    <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-27 a las 09.02.25_1d95b30d.webp" alt="Trabajo 8" width="1200" height="1600">
     <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-20 a las 22.37.24_21aa2176.webp" alt="Trabajo 9" width="1200" height="1600">
+    <img loading="lazy" decoding="async" src="img/imagen13.jpg" alt="Trabajo 9" width="1200" height="1600">
+    <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-20 a las 08.03.25_879fe14e.webp" alt="Trabajo 1" width="1200" height="1600">
   </div>
 </section>
 
@@ -143,6 +148,34 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 </script>
+<script>
+  // Seleccionamos todas las imágenes de la galería
+  const imagenes = document.querySelectorAll(".grid-galeria img");
+  const lightbox = document.querySelector(".lightbox");
+  const lightboxImg = document.querySelector(".lightbox-contenido");
+  const cerrar = document.querySelector(".cerrar");
+
+  // Abrir lightbox al hacer click en una imagen
+  imagenes.forEach(img => {
+    img.addEventListener("click", () => {
+      lightbox.style.display = "block";
+      lightboxImg.src = img.src;
+    });
+  });
+
+  // Cerrar al hacer click en la X
+  cerrar.addEventListener("click", () => {
+    lightbox.style.display = "none";
+  });
+
+  // Cerrar al hacer click fuera de la imagen
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) {
+      lightbox.style.display = "none";
+    }
+  });
+</script>
+
 
 </body>
 </html>

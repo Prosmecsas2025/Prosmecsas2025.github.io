@@ -93,7 +93,7 @@ footer a{color:#cbd5e1}
 }
 /* LOGO EN HEADER */
 .header .brand img {
-  height: 120px;   /* más grande (puedes subir a 150px si quieres) */
+  height: 150px;   /* más grande (puedes subir a 150px si quieres) */
   width: auto;     /* mantiene proporción */
 }
 
@@ -102,7 +102,7 @@ footer a{color:#cbd5e1}
   height: 100px;   /* más grande en el footer */
   width: auto;
 }
-/* ==== GALERÍA ESTILO LAMBORGHINI ==== */
+
 .galeria {
   padding: 50px 5%;
   background: #f9f9f9;
@@ -137,7 +137,7 @@ footer a{color:#cbd5e1}
   box-shadow: 0 8px 20px rgba(0,0,0,0.35);
 }
 
-/* ==== GALERÍA ESTILO LAMBORGHINI ==== */
+
 .galeria {
   padding: 50px 5%;
   background: #f9f9f9;
@@ -159,13 +159,14 @@ footer a{color:#cbd5e1}
 
 .grid-galeria img {
   width: 100%;
-  height: 300px;
-  object-fit: cover;
+  height: 250px;       /* mismo alto para todas */
+  object-fit: cover;   /* rellena el espacio, recorta si sobra */
   border-radius: 14px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.25);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   cursor: pointer;
 }
+
 
 .grid-galeria img:hover {
   transform: scale(1.05);
@@ -188,8 +189,8 @@ footer a{color:#cbd5e1}
 .lightbox-contenido {
   margin: auto;
   display: block;
-  max-width: 90%;
-  max-height: 80vh;
+  max-width: 100%;
+  max-height: 90vh;
   border-radius: 10px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.6);
 }
