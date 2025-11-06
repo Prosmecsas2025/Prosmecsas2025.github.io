@@ -212,3 +212,65 @@ a[href*="wa.me"], a[href*="whatsapp.com"]{position:fixed;right:1rem;bottom:1rem;
 @media (max-width:600px){
   #back-to-top{width:42px;height:42px;right:.75rem;bottom:.75rem}
 }
+
+/* ==== SECCIÓN NOSOTROS ==== */
+#nosotros {
+  padding: 60px 0;
+}
+
+.titulo-nosotros {
+  font-weight: 700;
+  color: #222;
+  font-size: 2rem;
+}
+
+.lineas-decorativas {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.linea {
+  height: 4px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.linea.naranja { width: 50px; background-color: #ff9800; }
+.linea.azul { width: 50px; background-color: #1976d2; }
+.linea.gris { width: 50px; background-color: #555; }
+
+.texto-nosotros {
+  color: #333;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  text-align: justify;
+}
+
+#nosotros img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+#nosotros img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.25);
+}
+
+/* Ajuste responsive */
+@media (max-width: 768px) {
+  .titulo-nosotros {
+    text-align: center;
+  }
+
+  .texto-nosotros {
+    text-align: justify;
+  }
+
+  .lineas-decorativas {
+    justify-content: center;
+  }
+}
+

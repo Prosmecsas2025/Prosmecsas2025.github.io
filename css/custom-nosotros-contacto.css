@@ -1,0 +1,19 @@
+
+/* Custom styles for Nosotros & Contacto */
+.hero-nosotros {
+  background: linear-gradient(135deg, rgba(3,37,65,0.85), rgba(6,80,125,0.85)), url('img/opt/imgfondonosotros.png.webp') center/cover no-repeat;
+  color: #fff;
+  padding: 6rem 0;
+}
+.card-mision { background: rgba(255,255,255,0.05); border: none; }
+.values-list { gap: 1rem; display: flex; flex-wrap: wrap; }
+.value-pill { background: rgba(255,255,255,0.06); padding: .6rem 1rem; border-radius: 999px; }
+.timeline { border-left: 3px solid rgba(255,255,255,0.08); padding-left: 1.25rem; }
+.contact-section { padding: 3rem 0; }
+.form-control:focus { box-shadow: none; border-color: #1c7ed6; }
+.btn-primary { background: linear-gradient(90deg,#0ea5e9,#0369a1); border: none; }
+.contact-info .icon { font-size: 1.5rem; margin-right: .5rem; }
+@media (max-width: 767px) {
+  .hero-nosotros { padding: 3rem 0; }
+}
+.success-msg { display:none; }

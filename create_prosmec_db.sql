@@ -1,0 +1,12 @@
+
+-- Run this in phpMyAdmin or MySQL console (XAMPP).
+CREATE DATABASE IF NOT EXISTS prosmec_db DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE prosmec_db;
+CREATE TABLE IF NOT EXISTS contactos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(200) NOT NULL,
+  email VARCHAR(200) NOT NULL,
+  asunto VARCHAR(200) DEFAULT NULL,
+  mensaje TEXT NOT NULL,
+  creado_en DATETIME NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

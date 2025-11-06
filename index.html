@@ -3,84 +3,207 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Inicio · PROSMEC S.A.S.</title>
+  <title>PROSMEC S.A.S. · Procesos y Suministros Metalmecánicos</title>
   <link rel="stylesheet" href="css/main.css">
   <script defer src="js/main.js"></script>
   <link rel="icon" href="img/logo.webp">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2d9b1b6c4.js" crossorigin="anonymous"></script>
 
-  <meta name="description" content="Mecanizado, soldadura, mantenimiento y suministros industriales. PROSMEC S.A.S.">
-  <meta property="og:title" content="Inicio · PROSMEC S.A.S.">
-  <meta property="og:description" content="Soluciones metalmecánicas para la industria. Calidad y cumplimiento.">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="PROSMEC S.A.S.">
-  <meta property="og:image" content="/img/logo.webp">
-  <link rel="canonical" href="/">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "PROSMEC S.A.S.", "url": "/", "logo": "/img/logo.webp"}</script>
-<style>
-  #btnTop {
-    display: none;
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
-    z-index: 999;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 22px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    transition: opacity 0.3s ease-in-out, background 0.3s;
-  }
-  #btnTop:hover {
-    background: #0056b3;
-  }
-  @media (max-width: 768px) {
-    #btnTop {
-      bottom: 100px;
-      width: 45px;
-      height: 45px;
-      font-size: 20px;
+  <style>
+    /* ======== HERO CON GIF - MEJOR VISIBILIDAD ======== */
+    .hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      color: #fff;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* fondo GIF */
+      background-image: url('img/MECANIZADO-1.1.gif');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
     }
-  }
-</style>
 
+    /* overlay menos oscuro para que el GIF se vea pero el texto resalte */
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.30); /* <-- menos opaco (antes 0.55) */
+      z-index: 0;
+      /* ligero desenfoque para separar fondo del texto (opcional, soportado en la mayoría de navegadores modernos) */
+      -webkit-backdrop-filter: blur(2px);
+      backdrop-filter: blur(2px);
+    }
+
+    /* forzar que el contenido esté por encima del overlay */
+    .hero > .hero-content,
+    .hero h1,
+    .hero p,
+    .hero .btn {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0;
+      color: #ffffff;
+      /* sombra para mejorar contraste */
+      text-shadow: 0 6px 20px rgba(0,0,0,0.65);
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      margin-top: 15px;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      color: #f7f7f7;
+      text-shadow: 0 4px 14px rgba(0,0,0,0.55);
+    }
+
+    .hero .btn {
+      margin-top: 25px;
+      margin-inline: 10px;
+      padding: 12px 30px;
+      font-weight: 700;
+      border-radius: 50px;
+      transition: transform .2s ease, box-shadow .2s ease;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    }
+    .hero .btn:hover { transform: translateY(-4px); }
+
+    /* Asegurar buen contraste en el botón claro */
+    .hero .btn.btn-light {
+      color: #003366;
+    }
+
+    /* Responsive tweaks para móviles: reducir padding y tamaño de texto */
+    @media (max-width: 576px) {
+      .hero {
+        padding: 0 16px;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .hero p {
+        font-size: 0.98rem;
+      }
+    }
+
+    /* ======== SERVICIOS ======== */
+    .servicios .card {
+      border: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .servicios .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+    }
+
+    /* ======== EXPERIENCIA ======== */
+    .experiencia {
+      background: #f2f2f2;
+      text-align: center;
+      padding: 80px 0;
+    }
+    .experiencia .counter {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    /* ======== POR QUÉ ELEGIRNOS ======== */
+    .why-us {
+      background: #fff;
+      padding: 80px 0;
+    }
+    .why-us .icon-box {
+      text-align: center;
+      padding: 30px;
+      border-radius: 12px;
+      transition: all 0.3s;
+    }
+    .why-us .icon-box:hover {
+      background: #007bff;
+      color: #fff;
+      transform: translateY(-5px);
+    }
+
+    /* ======== TESTIMONIOS ======== */
+    .testimonios {
+      background: #f8f9fa;
+      padding: 80px 0;
+    }
+    .testimonio-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .testimonio-card:hover { transform: translateY(-5px); }
+
+    /* ======== CTA FINAL ======== */
+    .cta {
+      background: #003366;
+      color: #fff;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .cta .btn {
+      background: #fff;
+      color: #003366;
+      font-weight: bold;
+      border-radius: 50px;
+      padding: 12px 30px;
+    }
+
+    
+  </style>
 </head>
 <body>
-  <a href="#main" id="skip-to-content">Saltar al contenido principal</a>
-<header class="header">
-  <div class="container header-inner">
-    <div class="brand">
-      <a href="index.html"><img loading="lazy" decoding="async" src="img/logo.webp" alt="PROSMEC SAS" width="800" height="800"></a>
-      <strong> PROSMEC S.A.S. ⚙️⚙️⚙️ PROCESOS Y SUMINISTROS METALMECANICOS. </strong>
+  <!-- HEADER (igual al resto de páginas) -->
+  <header class="header">
+    <div class="container header-inner d-flex align-items-center justify-content-between py-3">
+      <div class="brand d-flex align-items-center gap-3">
+        <a href="index.html"><img src="img/logo.webp" alt="PROSMEC SAS" width="100"></a>
+        <strong>PROSMEC S.A.S.</strong>
+      </div>
+      <nav class="nav">
+        <a href="index.html" class="me-3">Inicio</a>
+        <a href="nosotros.html" class="me-3">Nosotros</a>
+        <a href="servicios.html" class="me-3">Servicios</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
     </div>
-    <nav class="nav">
-      <a href="index.html">Inicio</a>
-      <a href="nosotros.html">Nosotros</a>
-      <a href="servicios.html">Servicios</a>
-      <a href="contacto.html">Contacto</a>
-    </nav>
-  </div>
-</header>
-<main id="main" role="main">
+  </header>
 
-<section class="hero">
-  <div class="container">
-    <h1>Soluciones Metalmecánicas Para La Industria</h1>
-    <p>Mantenimiento, mecanizado, soldadura y suministros industriales con calidad y cumplimiento.</p>
-    <a href="servicios.html" class="btn">Ver servicios</a>
-  </div>
-</section>
+  <!-- HERO CON GIF -->
+  <section class="hero" role="img" aria-label="Fondo animado de mecanizado">
+    <div class="hero-content" data-aos="zoom-in">
+      <h1>PROSMEC S.A.S.</h1>
+      <p>Procesos y Suministros Metalmecánicos. Soluciones industriales con calidad, precisión y cumplimiento.</p>
+      <a href="servicios.html" class="btn btn-primary">Ver Servicios</a>
+      <a href="contacto.html" class="btn btn-light">Contáctanos</a>
+    </div>
+  </section>
 
-
-<section class="galeria">
- <h2></h2>
-  <div class="grid-galeria">
+  <!-- SERVICIOS DESTACADOS -->
+  <section class="servicios py-5">
+    <div class="container">
+      <h2 class="text-center mb-5">Nuestros Servicios</h2>
+      <div class="grid-galeria">
     <img loading="lazy" decoding="async" src="img/imagen1.jpg" alt="Trabajo 1" width="1200" height="1600">
     <img loading="lazy" decoding="async" src="img/imagen2.jpg" alt="Trabajo 2" width="1200" height="1600">
     <img loading="lazy" decoding="async" src="img/imagen3.jpg" alt="Trabajo 3" width="1200" height="1600">
@@ -96,86 +219,133 @@
     <img loading="lazy" decoding="async" src="img/imagen13.jpg" alt="Trabajo 9" width="1200" height="1600">
     <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-20 a las 08.03.25_879fe14e.webp" alt="Trabajo 1" width="1200" height="1600">
   </div>
-</section>
+  </section>
 
-<div id="lightbox" class="lightbox">
-  <span class="cerrar">&times;</span>
-  <img class="lightbox-contenido" id="imgAmpliada">
-</div>
-
-<footer>
-  <div class="footer-top">
-    <div class="container footer-cols">
-      <div class="footer-brand">
-        <img loading="lazy" decoding="async" src="img/logo.webp" alt="PROSMEC SAS" width="800" height="800">
-        <p>Procesos y Suministros Metalmecánicos</p>
-      </div>
-      <div>
-        <h4>Contacto</h4>
-        <p><a href="tel:+573145693906">+57 314 569 3906</a> · <a href="tel:+573176447432">+57 317 644 7432</a></p>
-        <p><a href="mailto:prosmecsas@gmail.com">prosmecsas@gmail.com</a></p>
-        <p><a target="_blank" href="https://www.google.com/maps/search/?api=1&query=Carrera+48+%23+44-48">Cra 48 # 44-48</a></p>
-      </div>
-      <div>
-        <h4>Horario</h4>
-        <p>Lunes a Viernes: 8:00 - 17:30</p>
-        <p>Sábados: 8:00 - 12:00</p>
+  <!-- EXPERIENCIA -->
+  <section class="experiencia" data-aos="fade-up">
+    <h2>Fortaleciendo la industria desde 2022</h2>
+    <p class="mb-5">Comprometidos con la innovación, la calidad y la eficiencia.</p>
+    <div class="container">
+      <div class="row justify-content-center g-4">
+        <div class="col-md-3">
+          <div class="counter">+100</div>
+          <p>Proyectos ejecutados</p>
+        </div>
+        <div class="col-md-3">
+          <div class="counter">+50</div>
+          <p>Clientes satisfechos</p>
+        </div>
+        <div class="col-md-3">
+          <div class="counter">3</div>
+          <p>Años de experiencia</p>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="container footer-bottom">
-    <p>© 2025 PROSMEC S.A.S. · Todos los derechos reservados</p>
-  </div>
-</main>
-</footer>
-<a class="whatsapp-float" href="https://wa.me/573145693906" target="_blank">WhatsApp</a>
+  </section>
 
-<button id="back-to-top" aria-label="Volver arriba" style="position:fixed;right:1rem;bottom:1rem;display:none;padding:.6rem .8rem;border-radius:9999px;border:none;box-shadow:0 2px 10px rgba(0,0,0,.15);cursor:pointer;z-index:9999">↑</button>
+  <!-- POR QUÉ ELEGIRNOS -->
+  <section class="why-us" data-aos="fade-up">
+    <div class="container">
+      <h2 class="text-center mb-5">¿Por qué elegirnos?</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="icon-box shadow-sm">
+            <i class="fas fa-certificate fa-3x mb-3"></i>
+            <h5>Calidad Certificada</h5>
+            <p>Procesos estandarizados para garantizar la máxima calidad en cada servicio.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="icon-box shadow-sm">
+            <i class="fas fa-clock fa-3x mb-3"></i>
+            <h5>Cumplimiento y Responsabilidad</h5>
+            <p>Entregas a tiempo y compromiso total con nuestros clientes.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="icon-box shadow-sm">
+            <i class="fas fa-users-cog fa-3x mb-3"></i>
+            <h5>Equipo Técnico Calificado</h5>
+            <p>Personal especializado con experiencia comprobada en el sector metalmecánico.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- Botón Volver Arriba -->
-<button id="btnTop" aria-label="Volver arriba" title="Volver arriba">⬆</button>
+  <!-- CTA FINAL -->
+  <section class="cta" data-aos="zoom-in">
+    <h2>¿Buscas un aliado confiable en soluciones metalmecánicas?</h2>
+    <p>Hablemos y hagamos que tu producción nunca se detenga.</p>
+    <a href="contacto.html" class="btn btn-light mt-3">Contactar Ahora</a>
+  </section>
 
-<script>
-  const btnTop = document.getElementById("btnTop");
-  window.addEventListener("scroll", () => {
-    if (document.documentElement.scrollTop > 300) {
-      btnTop.style.display = "block";
-    } else {
-      btnTop.style.display = "none";
-    }
-  });
-  btnTop.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-</script>
-<script>
-  // Seleccionamos todas las imágenes de la galería
-  const imagenes = document.querySelectorAll(".grid-galeria img");
-  const lightbox = document.querySelector(".lightbox");
-  const lightboxImg = document.querySelector(".lightbox-contenido");
-  const cerrar = document.querySelector(".cerrar");
+  <!-- FOOTER (igual al resto de páginas) -->
+  <footer>
+    <div class="footer-top">
+      <div class="container footer-cols">
+        <div class="footer-brand">
+          <img src="img/logo.webp" alt="PROSMEC SAS" width="100">
+          <p>Procesos y Suministros Metalmecánicos</p>
+        </div>
+        <div>
+          <h4>Contacto</h4>
+          <p><a href="tel:+573145693906">+57 314 569 3906</a> · <a href="tel:+573176447432">+57 317 644 7432</a></p>
+          <p><a href="mailto:prosmecsas@gmail.com">prosmecsas@gmail.com</a></p>
+          <p><a target="_blank" href="https://www.google.com/maps/search/?api=1&query=Carrera+48+%23+44-48">Cra 48 # 44-48</a></p>
+        </div>
+        <div>
+          <h4>Horario</h4>
+          <p>Lunes a Viernes: 8:00 - 17:30</p>
+          <p>Sábados: 8:00 - 12:00</p>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© 2025 PROSMEC S.A.S. · Todos los derechos reservados</p>
+    </div>
+  </footer>
 
-  // Abrir lightbox al hacer click en una imagen
-  imagenes.forEach(img => {
-    img.addEventListener("click", () => {
-      lightbox.style.display = "block";
-      lightboxImg.src = img.src;
-    });
-  });
+  <!-- LIBRERÍAS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
 
-  // Cerrar al hacer click en la X
-  cerrar.addEventListener("click", () => {
-    lightbox.style.display = "none";
-  });
+  <!-- Botón de WhatsApp -->
+<a href="https://wa.me/573145693906?text=Hola%20PROSMEC,%20me%20gustaría%20obtener%20más%20información."
+   class="whatsapp-float"
+   target="_blank"
+   title="Contáctanos por WhatsApp"
+   aria-label="WhatsApp PROSMEC">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="white">
+    <path d="M19.11 17.64c-.31-.15-1.84-.9-2.12-1-.29-.1-.5-.15-.71.15-.21.31-.81 1-.99 1.21-.18.21-.37.23-.68.08-.31-.15-1.31-.48-2.5-1.53-.92-.82-1.54-1.84-1.72-2.15-.18-.31-.02-.48.13-.63.13-.13.31-.34.47-.5.15-.18.21-.31.31-.52.1-.21.05-.39-.03-.55-.08-.15-.71-1.72-.97-2.36-.26-.63-.52-.55-.71-.56h-.61c-.21 0-.55.08-.84.39-.29.31-1.1 1.08-1.1 2.63s1.13 3.05 1.29 3.26c.15.21 2.23 3.4 5.39 4.77.75.32 1.34.51 1.8.65.76.24 1.45.21 2 .13.61-.09 1.84-.75 2.1-1.48.26-.73.26-1.35.18-1.48-.08-.13-.28-.21-.59-.36zM16.02 3c-7.17 0-13 5.83-13 13 0 2.29.6 4.54 1.75 6.53L3 29l6.66-1.74c1.91 1.04 4.06 1.59 6.36 1.59h.01c7.17 0 13-5.83 13-13 0-3.48-1.36-6.76-3.83-9.22C22.78 4.36 19.5 3 16.02 3zm0 23.91c-1.98 0-3.92-.53-5.61-1.54l-.4-.23-3.95 1.03 1.06-3.85-.26-.39c-1.09-1.67-1.67-3.62-1.67-5.62 0-5.74 4.67-10.41 10.41-10.41 2.78 0 5.38 1.08 7.34 3.04 1.96 1.96 3.04 4.56 3.04 7.34 0 5.74-4.67 10.41-10.41 10.41z"/>
+  </svg>
+</a>
 
-  // Cerrar al hacer click fuera de la imagen
-  lightbox.addEventListener("click", (e) => {
-    if (e.target === lightbox) {
-      lightbox.style.display = "none";
-    }
-  });
-</script>
+<style>
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25D366;
+  color: white;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 9999;
+}
 
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+</style>
 
 </body>
 </html>

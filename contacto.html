@@ -4,178 +4,307 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Contacto · PROSMEC S.A.S.</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
-  <script defer src="js/main.js"></script>
   <link rel="icon" href="img/logo.webp">
+  <script defer src="js/main.js"></script>
 
-  <meta name="description" content="Mecanizado, soldadura, mantenimiento y suministros industriales. PROSMEC S.A.S.">
-  <meta property="og:title" content="Contacto · PROSMEC S.A.S.">
-  <meta property="og:description" content="Soluciones metalmecánicas para la industria. Calidad y cumplimiento.">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="PROSMEC S.A.S.">
-  <meta property="og:image" content="/img/logo.webp">
-  <link rel="canonical" href="/">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "PROSMEC S.A.S.", "url": "/", "logo": "/img/logo.webp"}</script>
   <style>
-    /* Botón subir */
-    #btnTop {
-      display: none;
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      z-index: 999;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 22px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: opacity 0.3s ease-in-out, background 0.3s;
-    }
-    #btnTop:hover { background: #0056b3; }
-    @media (max-width: 768px) {
-      #btnTop { bottom: 100px; width: 45px; height: 45px; font-size: 20px; }
+    body {
+      background-color: #f9f9f9;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
     }
 
-    /* Formulario contacto */
-    .contact-form {
-      background: #f9f9f9;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      margin-top: 40px;
-      animation: fadeIn 1s ease-in-out;
+    /* === SECCIÓN DE CONTACTO === */
+    .contact-section {
+      padding: 100px 0;
+      position: relative;
+      z-index: 2;
     }
-    .contact-form input, .contact-form textarea, .contact-form button {
+
+    .contact-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border-radius: 6px;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(0,51,102,0.05), rgba(0,123,255,0.05));
+      z-index: -1;
+    }
+
+    .contact-title {
+      font-weight: 700;
+      color: #003366;
+      margin-bottom: 10px;
+      animation: fadeInDown 1s ease;
+    }
+
+    .contact-subtitle {
+      color: #555;
+      animation: fadeInDown 1.3s ease;
+    }
+
+    /* Tarjeta del formulario */
+    .contact-card {
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      padding: 40px;
+      transition: 0.4s;
+      animation: fadeInUp 1s ease;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    }
+
+    .contact-card h2 {
+      font-weight: 700;
+      color: #003366;
+      margin-bottom: 20px;
+    }
+
+    .contact-card input, .contact-card textarea {
+      border-radius: 10px;
       border: 1px solid #ddd;
-      font-size: 16px;
+      transition: all 0.3s ease;
+      padding: 10px 15px;
     }
-    .contact-form button {
-      background: #007bff;
+
+    .contact-card input:focus, .contact-card textarea:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 6px rgba(0,123,255,0.3);
+      outline: none;
+    }
+
+    .btn-custom {
+      background-color: #007bff;
       color: white;
-      border: none;
-      cursor: pointer;
+      border-radius: 10px;
+      padding: 12px 25px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
       transition: 0.3s;
+      border: none;
     }
-    .contact-form button:hover { background: #0056b3; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
+
+    .btn-custom:hover {
+      background-color: #0056b3;
+      transform: scale(1.03);
+    }
+
+    /* Caja de información */
+    .info-box {
+      background: white;
+      border-radius: 18px;
+      padding: 40px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      animation: fadeInUp 1.3s ease;
+      transition: 0.4s;
+    }
+
+    .info-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    }
+
+    .info-box h2 {
+      font-weight: 700;
+      color: #003366;
+      margin-bottom: 20px;
+    }
+
+    .info-box p a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .info-box p a:hover {
+      text-decoration: underline;
+    }
+
+    /* Mapa */
+    .map-container iframe {
+      border-radius: 15px;
+      width: 100%;
+      height: 350px;
+      border: none;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      animation: fadeInUp 1.5s ease;
+    }
+
+    /* Animaciones */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Mensaje de éxito */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Mensaje enviado */
     #formMsg {
       display: none;
-      margin-top: 10px;
-      color: green;
-      font-weight: bold;
+      font-weight: 600;
+      color: #28a745;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    @media (max-width: 992px) {
+      .contact-section {
+        padding: 60px 20px;
+      }
     }
   </style>
 </head>
+
 <body>
-  <a href="#main" id="skip-to-content">Saltar al contenido principal</a>
-<header class="header">
-  <div class="container header-inner">
-    <div class="brand">
-      <a href="index.html"><img loading="lazy" decoding="async" src="img/logo.webp" alt="PROSMEC SAS" width="800" height="800"></a>
-      <strong>PROSMEC S.A.S.</strong>
+  <!-- === HEADER ORIGINAL === -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="brand">
+        <a href="index.html"><img src="img/logo.webp" alt="PROSMEC SAS" width="80"></a>
+        <strong>PROSMEC S.A.S.</strong>
+      </div>
+      <nav class="nav">
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="contacto.html" class="active">Contacto</a>
+      </nav>
     </div>
-    <nav class="nav">
-      <a href="index.html">Inicio</a>
-      <a href="nosotros.html">Nosotros</a>
-      <a href="servicios.html">Servicios</a>
-      <a href="contacto.html">Contacto</a>
-    </nav>
-  </div>
-</header>
-<main id="main" role="main">
+  </header>
 
-<section class="container" style="padding:40px 0">
-  <h1>Contacto</h1>
-  <p><strong>Póngase en contacto con nosotros</strong> <a href="tel:+573145693906">+57 314 569 3906</a></p>
-  <p><a href="tel:+573176447432">+57 317 644 7432</a></p>
-  <p><a href="mailto:prosmecsas@gmail.com">prosmecsas@gmail.com</a></p>
-  <p><a target="_blank" href="https://www.google.com/maps/search/?api=1&query=Carrera+48+%23+44-48">Cra 48 # 44-48</a></p>
-  <div style="margin-top:16px">
-    <iframe src="https://www.google.com/maps?q=Cra%2048%20%23%2044-48&output=embed" width="100%" height="320" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-  </div>
-
-  <!-- 🔹 FORMULARIO SIMULADO -->
-  <div class="contact-form">
-    <h2>Envíanos un mensaje</h2>
-    <form id="formContact">
-      <input type="text" name="name" placeholder="Tu nombre" required>
-      <input type="email" name="email" placeholder="Tu correo" required>
-      <textarea name="message" rows="4" placeholder="Tu mensaje" required></textarea>
-      <button type="submit">Enviar</button>
-    </form>
-    <p id="formMsg">✅ ¡Tu mensaje fue enviado con éxito!</p>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-top">
-    <div class="container footer-cols">
-      <div class="footer-brand">
-        <img loading="lazy" decoding="async" src="img/logo.webp" alt="PROSMEC SAS" width="800" height="800">
-        <p>Procesos y Suministros Metalmecánicos</p>
+  <!-- === SECCIÓN DE CONTACTO === -->
+  <section class="contact-section">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h1 class="contact-title">Contáctanos</h1>
+        <p class="contact-subtitle">Tu aliado confiable en soluciones metalmecánicas con calidad y cumplimiento.</p>
       </div>
-      <div>
-        <h4>Contacto</h4>
-        <p><a href="tel:+573145693906">+57 314 569 3906</a> · <a href="tel:+573176447432">+57 317 644 7432</a></p>
-        <p><a href="mailto:prosmecsas@gmail.com">prosmecsas@gmail.com</a></p>
-        <p><a target="_blank" href="https://www.google.com/maps/search/?api=1&query=Carrera+48+%23+44-48">Cra 48 # 44-48</a></p>
-      </div>
-      <div>
-        <h4>Horario</h4>
-        <p>Lunes a Viernes: 8:00 - 17:30</p>
-        <p>Sábados: 8:00 - 12:00</p>
+
+      <div class="row g-4">
+        <!-- FORMULARIO -->
+        <div class="col-lg-6">
+          <div class="contact-card">
+            <h2>Envíanos un mensaje</h2>
+            <form id="formContact" action="procesar_contacto.php" method="POST">
+              <div class="mb-3">
+                <label class="form-label">Nombre completo</label>
+                <input type="text" name="name" class="form-control" placeholder="Tu nombre" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Correo electrónico</label>
+                <input type="email" name="email" class="form-control" placeholder="tu@correo.com" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Mensaje</label>
+                <textarea name="message" class="form-control" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-custom w-100">Enviar mensaje</button>
+              <div id="formMsg">✅ ¡Tu mensaje ha sido enviado con éxito!</div>
+            </form>
+          </div>
+        </div>
+
+        <!-- INFORMACIÓN -->
+        <div class="col-lg-6">
+          <div class="info-box">
+            <h2>Información de contacto</h2>
+            <p><strong>📍 Dirección:</strong> Cra 48 # 44-48, Cali, Valle del Cauca</p>
+            <p><strong>📞 Teléfonos:</strong> <a href="tel:+573145693906">+57 314 569 3906</a> / <a href="tel:+573176447432">+57 317 644 7432</a></p>
+            <p><strong>✉️ Correo:</strong> <a href="mailto:prosmecsas@gmail.com">prosmecsas@gmail.com</a></p>
+            <p><strong>🕒 Horario:</strong><br>Lunes a Viernes: 8:00 - 17:30<br>Sábados: 8:00 - 12:00</p>
+          </div>
+
+          <div class="map-container mt-4">
+            <iframe src="https://www.google.com/maps?q=Cra%2048%20%23%2044-48%20Cali%20Colombia&output=embed" loading="lazy"></iframe>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="container footer-bottom">
-    <p>© 2025 PROSMEC S.A.S. · Todos los derechos reservados</p>
-  </div>
-</main>
-</footer>
-<a class="whatsapp-float" href="https://wa.me/573145693906" target="_blank">WhatsApp</a>
+  </section>
 
-<button id="back-to-top" aria-label="Volver arriba" style="position:fixed;right:1rem;bottom:1rem;display:none;padding:.6rem .8rem;border-radius:9999px;border:none;box-shadow:0 2px 10px rgba(0,0,0,.15);cursor:pointer;z-index:9999">↑</button>
-<button id="btnTop" aria-label="Volver arriba" title="Volver arriba">⬆</button>
+  <!-- === FOOTER ORIGINAL === -->
+  <footer>
+    <div class="footer-top">
+      <div class="container footer-cols">
+        <div class="footer-brand">
+          <img src="img/logo.webp" alt="PROSMEC SAS" width="80">
+          <p>Procesos y Suministros Metalmecánicos</p>
+        </div>
+        <div>
+          <h4>Contacto</h4>
+          <p><a href="tel:+573145693906">+57 314 569 3906</a> · <a href="tel:+573176447432">+57 317 644 7432</a></p>
+          <p><a href="mailto:prosmecsas@gmail.com">prosmecsas@gmail.com</a></p>
+          <p><a target="_blank" href="https://www.google.com/maps/search/?api=1&query=Carrera+48+%23+44-48">Cra 48 # 44-48</a></p>
+        </div>
+        <div>
+          <h4>Horario</h4>
+          <p>Lunes a Viernes: 8:00 - 17:30</p>
+          <p>Sábados: 8:00 - 12:00</p>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© 2025 PROSMEC S.A.S. · Todos los derechos reservados</p>
+    </div>
+  </footer>
 
-<script>
-  // Botón subir
-  const btnTop = document.getElementById("btnTop");
-  window.addEventListener("scroll", () => {
-    if (document.documentElement.scrollTop > 300) {
-      btnTop.style.display = "block";
-    } else {
-      btnTop.style.display = "none";
-    }
-  });
-  btnTop.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
+  <!-- === SCRIPT DE ENVÍO SIMULADO === -->
+  <script>
+    const form = document.getElementById("formContact");
+    const msg = document.getElementById("formMsg");
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      msg.style.display = "block";
+      form.reset();
+    });
+  </script>
 
-  // Simulación de envío de formulario
-  const form = document.getElementById("formContact");
-  const msg = document.getElementById("formMsg");
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  form.addEventListener("submit", function(event){
-    event.preventDefault(); // No recarga la página
-    msg.style.display = "block"; // Muestra el mensaje
-    form.reset(); // Limpia los campos
-  });
-</script>
+  <!-- Botón de WhatsApp -->
+<a href="https://wa.me/573145693906?text=Hola%20PROSMEC,%20me%20gustaría%20obtener%20más%20información."
+   class="whatsapp-float"
+   target="_blank"
+   title="Contáctanos por WhatsApp"
+   aria-label="WhatsApp PROSMEC">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="white">
+    <path d="M19.11 17.64c-.31-.15-1.84-.9-2.12-1-.29-.1-.5-.15-.71.15-.21.31-.81 1-.99 1.21-.18.21-.37.23-.68.08-.31-.15-1.31-.48-2.5-1.53-.92-.82-1.54-1.84-1.72-2.15-.18-.31-.02-.48.13-.63.13-.13.31-.34.47-.5.15-.18.21-.31.31-.52.1-.21.05-.39-.03-.55-.08-.15-.71-1.72-.97-2.36-.26-.63-.52-.55-.71-.56h-.61c-.21 0-.55.08-.84.39-.29.31-1.1 1.08-1.1 2.63s1.13 3.05 1.29 3.26c.15.21 2.23 3.4 5.39 4.77.75.32 1.34.51 1.8.65.76.24 1.45.21 2 .13.61-.09 1.84-.75 2.1-1.48.26-.73.26-1.35.18-1.48-.08-.13-.28-.21-.59-.36zM16.02 3c-7.17 0-13 5.83-13 13 0 2.29.6 4.54 1.75 6.53L3 29l6.66-1.74c1.91 1.04 4.06 1.59 6.36 1.59h.01c7.17 0 13-5.83 13-13 0-3.48-1.36-6.76-3.83-9.22C22.78 4.36 19.5 3 16.02 3zm0 23.91c-1.98 0-3.92-.53-5.61-1.54l-.4-.23-3.95 1.03 1.06-3.85-.26-.39c-1.09-1.67-1.67-3.62-1.67-5.62 0-5.74 4.67-10.41 10.41-10.41 2.78 0 5.38 1.08 7.34 3.04 1.96 1.96 3.04 4.56 3.04 7.34 0 5.74-4.67 10.41-10.41 10.41z"/>
+  </svg>
+</a>
+
+<style>
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25D366;
+  color: white;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 9999;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+</style>
+
 </body>
 </html>
