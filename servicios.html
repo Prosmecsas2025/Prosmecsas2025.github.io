@@ -50,6 +50,7 @@
   }
 </style>
 
+<!-- PROSMEC-SAS: ACTUALIZADO POR CHATGPT (MARCA VISIBLE) -->
 </head>
 <body>
   <a href="#main" id="skip-to-content">Saltar al contenido principal</a>
@@ -166,27 +167,437 @@
   </div>
 </main>
 </footer>
-<a class="whatsapp-float" href="https://wa.me/573145693906" target="_blank">WhatsApp</a>
+
+<!-- Botón de WhatsApp con logo completo -->
+<a href="https://wa.me/573145693906?text=Hola%20PROSMEC,%20me%20gustaría%20obtener%20más%20información."
+   class="whatsapp-float"
+   target="_blank"
+   title="Contáctanos por WhatsApp"
+   aria-label="WhatsApp PROSMEC">
+  <img src="img/LOGO DE WHATSAP.png" alt="WhatsApp PROSMEC">
+</a>
+
+<style>
+  .whatsapp-float {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 95px;   /* 🔥 aumenta el tamaño */
+    height: 95px;  /* 🔥 aumenta el tamaño */
+    border-radius: 50%;
+    overflow: hidden;
+    background: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    z-index: 99999;
+    transition: transform 0.25s ease;
+  }
+
+  .whatsapp-float:hover {
+    transform: scale(1.1);
+  }
+
+  .whatsapp-float img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+  }
+
+  /* 🔹 Opcional: para pantallas pequeñas (ajusta automático) */
+  @media (max-width: 600px) {
+    .whatsapp-float {
+      width: 70px;
+      height: 70px;
+      bottom: 20px;
+      right: 20px;
+    }
+  }
+  .whatsapp-float img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  background: none;
+  transform: scale(1.2); /* 🔥 fuerza a que la imagen se expanda un poco más */
+}
+
+</style>
+
+  <!-- ======= ASISTENTE (HTML) ======= -->
+  <div id="asistente-prosmec" aria-live="polite" aria-atomic="true">
+    <!-- Botón (icono) — primero a la izquierda -->
+    <button id="bot-toggle" aria-label="Abrir asistente" title="Asistente PROSMEC">
+      <!-- usa IA.png como pediste -->
+      <img src="img/IA.png" alt="Asistente PROSMEC">
+    </button>
+
+    <!-- Mensaje flotante tipo nube (clarito) -->
+    <div id="bot-hint" role="status">
+      👋 Hola — ¿Necesitas ayuda? Puedo mostrar servicios, contacto o ubicación.
+    </div>
+
+    <!-- Widget completo (oculto hasta abrir) -->
+    <div id="chat-widget" role="dialog" aria-label="Chat Asistente PROSMEC">
+      <div id="chat-header">
+        <div class="chat-title">👷‍♂️ Asistente PROSMEC</div>
+        <button id="chat-close" aria-label="Cerrar chat">&times;</button>
+      </div>
+
+      <div id="chat-body">
+        <div class="bot-msg">¡Hola! Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?</div>
+      </div>
+
+      <div id="chat-options" aria-hidden="false">
+        <button class="chat-btn" onclick="sendOption('Servicios')">Servicios</button>
+        <button class="chat-btn" onclick="sendOption('Contactar')">Contacto</button>
+        <button class="chat-btn" onclick="sendOption('Ubicación')">Ubicación</button>
+        <button class="chat-btn" onclick="sendOption('Cotización')">Cotización</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript del asistente (autónomo, sin reemplazar tu js/main.js) -->
+  <script>
+    (function(){
+      const botToggle = document.getElementById('bot-toggle');
+      const botHint = document.getElementById('bot-hint');
+      const chatWidget = document.getElementById('chat-widget');
+      const chatClose = document.getElementById('chat-close');
+      const chatBody = document.getElementById('chat-body');
+
+      // Estado (cerrado por defecto)
+      let open = false;
+
+      // click en el icono -> abrir/cerrar widget; también ocultar hint cuando se abre
+      botToggle.addEventListener('click', function(e){
+        open = !open;
+        if(open){
+          chatWidget.classList.add('open');
+          botHint.style.display = 'none';
+          // focus accesible al chat
+          chatWidget.setAttribute('tabindex','-1');
+          chatWidget.focus();
+        } else {
+          chatWidget.classList.remove('open');
+          // mostrar de nuevo hint (con ligero retardo para que no parpadee)
+          setTimeout(()=> botHint.style.display = '', 120);
+        }
+      });
+
+      // cerrar con el botón X
+      chatClose.addEventListener('click', function(){
+        open = false;
+        chatWidget.classList.remove('open');
+        setTimeout(()=> botHint.style.display = '', 120);
+      });
+
+      // cerrar con tecla Escape por accesibilidad
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && open){
+          open = false;
+          chatWidget.classList.remove('open');
+          setTimeout(()=> botHint.style.display = '', 120);
+        }
+      });
+
+      // función que simula respuestas rápidas (puedes conectarla a tu backend después)
+      window.sendOption = function(opt){
+        // mostrar en el chat
+        const userDiv = document.createElement('div');
+        userDiv.className = 'user-msg';
+        userDiv.textContent = opt;
+        chatBody.appendChild(userDiv);
+
+        // respuesta simulada
+        setTimeout(()=> {
+          const botDiv = document.createElement('div');
+          botDiv.className = 'bot-msg';
+          if(opt === 'Servicios'){
+            botDiv.innerHTML = 'Ofrecemos mecanizado, soldadura, corte y mantenimiento industrial. ¿Quieres ver nuestros servicios?';
+          } else if(opt === 'Contactar'){
+            botDiv.innerHTML = 'Puedes llamarnos a <a href="tel:+573145693906">+57 314 569 3906</a> o escribir a <a href="mailto:prosmecsas@gmail.com">prosmecsas@gmail.com</a>.';
+          } else if(opt === 'Ubicación'){
+            botDiv.innerHTML = 'Nos encuentras en Cra 48 # 44-48. <a target="_blank" href="https://www.google.com/maps/search/?api=1&query=Carrera+48+%23+44-48">Ver mapa</a>';
+          } else if(opt === 'Cotización'){
+            botDiv.innerHTML = 'Para cotizaciones, por favor envíanos detalles del producto/servicio y te responderemos con tiempos y costos estimados.';
+          } else {
+            botDiv.innerHTML = 'Estoy aquí para ayudar. ¿Qué necesitas?';
+          }
+          chatBody.appendChild(botDiv);
+          // mantener scroll abajo
+          chatBody.scrollTop = chatBody.scrollHeight;
+        }, 450);
+        // mantener scroll abajo al agregar user
+        chatBody.scrollTop = chatBody.scrollHeight;
+      };
+    })();
+  </script>
+
+  <script src="js/asistente.js"></script>
+
+  <style>
+  /* ========== ESTILOS ASISTENTE PROSMEC ========== */
+  #asistente-prosmec {
+    position: fixed;
+    bottom: 100px;
+    left: 25px; /* 👈 posición exacta esquina inferior izquierda */
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+  }
+
+  #bot-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    overflow: hidden;
+    padding: 0;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+
+  #bot-toggle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #bot-toggle:hover {
+    transform: scale(1.07);
+  }
+
+  #bot-hint {
+    background: rgba(255,255,255,0.95);
+    color: #333;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 14px;
+    max-width: 220px;
+    line-height: 1.3;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    border-left: 4px solid #28a745;
+    animation: hintFloat 5s ease-in-out infinite alternate;
+  }
+
+  @keyframes hintFloat {
+    from { transform: translateY(0); }
+    to { transform: translateY(-4px); }
+  }
+
+  #chat-widget {
+    display: none;
+    position: fixed;
+    bottom: 175px;
+    left: 25px;
+    width: 300px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.35);
+    overflow: hidden;
+    flex-direction: column;
+    animation: fadeInUp 0.35s ease forwards;
+  }
+
+  #chat-widget.open {
+    display: flex;
+  }
+
+  #chat-header {
+    background: linear-gradient(135deg, #003366, #0a65b1);
+    color: #fff;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+  }
+
+  #chat-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  #chat-body {
+    max-height: 220px;
+    overflow-y: auto;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .bot-msg {
+    background: #f0f0f0;
+    margin: 6px 0;
+    padding: 8px 12px;
+    border-radius: 10px;
+    max-width: 85%;
+  }
+
+  .user-msg {
+    background: #d0ebff;
+    align-self: flex-end;
+    margin: 6px 0;
+    padding: 8px 12px;
+    border-radius: 10px;
+    max-width: 85%;
+  }
+
+  #chat-options {
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    background: #f9f9f9;
+  }
+
+  .chat-btn {
+    background: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.25s ease;
+  }
+
+  .chat-btn:hover {
+    background: #007bff;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* responsive */
+  @media (max-width: 500px) {
+    #chat-widget {
+      width: 90%;
+      left: 5%;
+      bottom: 120px;
+    }
+  }
+</style>
 
 
-<button id="back-to-top" aria-label="Volver arriba" style="position:fixed;right:1rem;bottom:1rem;display:none;padding:.6rem .8rem;border-radius:9999px;border:none;box-shadow:0 2px 10px rgba(0,0,0,.15);cursor:pointer;z-index:9999">↑</button>
+  <!-- BOTÓN SUBIR BONITO DERECHA -->
+<style>
+  #btnTop {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #002b5b, #0656b2);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 26px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    z-index: 99999;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
 
-<!-- Botón Volver Arriba -->
-<button id="btnTop" aria-label="Volver arriba" title="Volver arriba">⬆</button>
+  #btnTop:hover {
+    transform: translateY(-6px) scale(1.08);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+  }
+
+  #btnTop span {
+    transform: translateY(-1px);
+    font-weight: bold;
+  }
+</style>
+
+<button id="btnTop" title="Volver arriba">
+  <span>↑</span>
+</button>
 
 <script>
-  const btnTop = document.getElementById("btnTop");
+  // Mostrar botón cuando bajen la página
   window.addEventListener("scroll", () => {
-    if (document.documentElement.scrollTop > 300) {
-      btnTop.style.display = "block";
+    const btn = document.getElementById("btnTop");
+    if (window.scrollY > 350) {
+      btn.style.display = "flex";
     } else {
-      btnTop.style.display = "none";
+      btn.style.display = "none";
     }
   });
-  btnTop.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+
+  // Acción al hacer clic
+  document.getElementById("btnTop").addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
   });
 </script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* Variables que se adaptan al tamaño real del dispositivo */
+:root {
+    --vw: 1vw;
+    --vh: 1vh;
+}
+
+/* Ejemplo: si tienes contenedores de ancho completo */
+.full-screen {
+    width: calc(var(--vw) * 100);
+    height: calc(var(--vh) * 100);
+}
+
+/* Esto asegura que la página se vea bien en computadoras, tablets y celulares */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+* {
+    box-sizing: inherit;
+}
+</style>
+</head>
+
+<body>
+
+<!-- TU CONTENIDO AQUI -->
+
+
+<!-- Código para adaptar la página en todos los dispositivos -->
+<script>
+(function() {
+    function ajustar() {
+        document.documentElement.style.setProperty('--vw', (window.innerWidth * 0.01) + 'px');
+        document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
+    }
+    ajustar();
+    window.addEventListener('resize', ajustar);
+})();
+</script>
+</body>
+</html>
 
 </body>
 </html>

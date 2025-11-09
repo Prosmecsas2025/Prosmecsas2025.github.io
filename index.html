@@ -37,7 +37,6 @@
       width: 100%; height: 100%;
       background: rgba(0,0,0,0.30); /* <-- menos opaco (antes 0.55) */
       z-index: 0;
-      /* ligero desenfoque para separar fondo del texto (opcional, soportado en la mayoría de navegadores modernos) */
       -webkit-backdrop-filter: blur(2px);
       backdrop-filter: blur(2px);
     }
@@ -58,7 +57,6 @@
       letter-spacing: 2px;
       margin: 0;
       color: #ffffff;
-      /* sombra para mejorar contraste */
       text-shadow: 0 6px 20px rgba(0,0,0,0.65);
     }
 
@@ -169,7 +167,182 @@
       padding: 12px 30px;
     }
 
-    
+    /* ========== ASISTENTE (ACTUALIZACIÓN SOLICITADA) ========== */
+    /* contenedor izquierdo que agrupa icono + hint (nube) + widget */
+    #asistente-prosmec {
+      position: fixed;
+      left: 20px;
+      bottom: 20px;
+      z-index: 99999;
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      align-items: center;
+      pointer-events: none; /* por defecto para que no interfiera con scroll; elementos internos tendrán pointer-events */
+    }
+
+    /* botón redondo (ícono) — debe ser el primero a la izquierda */
+    #bot-toggle {
+      width: 60px;
+      height: 60px;
+      border-radius: 999px;
+      background: linear-gradient(180deg,#0d6efd,#0b5ed7);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.18);
+      cursor: pointer;
+      border: 3px solid rgba(255,255,255,0.08);
+      transition: transform .18s ease;
+      pointer-events: auto;
+    }
+    #bot-toggle img {
+      width: 40px;
+      height: 40px;
+      display:block;
+      object-fit:cover;
+      border-radius: 50%;
+    }
+    #bot-toggle:active { transform: translateY(2px); }
+    #bot-toggle:hover { transform: translateY(-4px); }
+
+    /* hint / mensaje flotante en forma de nube (aparece a la derecha del icono) */
+    #bot-hint {
+      pointer-events: auto;
+      background: rgba(255,255,255,0.82); /* clarito, no resalta */
+      color: #06203a;
+      padding: 10px 14px;
+      border-radius: 18px;
+      max-width: 220px;
+      font-size: 0.95rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      opacity: 0.9;
+      transform-origin: left center;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      /* estilo tipo "burbuja" con punteo (triangle) */
+      position: relative;
+      animation: floatLight 4s ease-in-out infinite;
+    }
+
+    /* pequeña "cola" hacia el icono, sutil */
+    #bot-hint::before {
+      content: "";
+      position: absolute;
+      left: -8px;
+      top: 50%;
+      transform: translateY(-50%) rotate(45deg);
+      width: 14px;
+      height: 14px;
+      background: rgba(255,255,255,0.82);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      border-radius: 3px 0 0 3px;
+    }
+
+    @keyframes floatLight {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* panel completo del chat (oculto por defecto) — se abre sobre la página cuando se activa */
+    #chat-widget {
+      pointer-events: auto;
+      width: 320px;
+      max-width: calc(100% - 40px);
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 24px 60px rgba(2,6,23,0.18);
+      overflow: hidden;
+      transform: translateY(8px);
+      opacity: 0;
+      transition: transform .18s ease, opacity .18s ease;
+      display: none;
+    }
+
+    #chat-widget.open {
+      display: block;
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    #chat-header {
+      background: linear-gradient(90deg,#0b5ed7,#0d6efd);
+      color: white;
+      padding: 12px;
+      font-weight: 700;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    #chat-header .chat-title {
+      flex:1;
+    }
+    #chat-close {
+      background:transparent;
+      border:0;
+      color: white;
+      font-weight:700;
+      cursor:pointer;
+      font-size:18px;
+    }
+
+    #chat-body {
+      padding: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      background: #fbfdff;
+    }
+
+    .bot-msg, .user-msg {
+      padding: 10px 12px;
+      border-radius: 12px;
+      max-width: 80%;
+      line-height:1.4;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 18px rgba(2,6,23,0.04);
+    }
+    .bot-msg {
+      background: #eef6ff;
+      color: #03304a;
+      align-self: flex-start;
+    }
+    .user-msg {
+      background: #e9ffec;
+      color: #01320a;
+      align-self: flex-end;
+      text-align: right;
+    }
+
+    #chat-options {
+      padding: 12px;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      border-top:1px solid #f1f5f9;
+      background: #fff;
+    }
+
+    .chat-btn {
+      background:#0b5ed7;
+      color:white;
+      border:0;
+      padding:8px 10px;
+      border-radius:8px;
+      cursor:pointer;
+      font-size: 0.9rem;
+    }
+    .chat-btn:hover { background:#0d6efd; }
+
+    /* responsive: mantener el asistente visible en pantallas pequeñas */
+    @media (max-width: 720px) {
+      #asistente-prosmec { left: 12px; bottom: 12px; }
+      #bot-hint { display:none; } /* en móviles ocultamos el hint para ahorrar espacio */
+    }
   </style>
 </head>
 <body>
@@ -204,21 +377,22 @@
     <div class="container">
       <h2 class="text-center mb-5">Nuestros Servicios</h2>
       <div class="grid-galeria">
-    <img loading="lazy" decoding="async" src="img/imagen1.jpg" alt="Trabajo 1" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/imagen2.jpg" alt="Trabajo 2" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/imagen3.jpg" alt="Trabajo 3" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/imagen4.jpg" alt="Trabajo 4" width="861" height="1080">
-    <img loading="lazy" decoding="async" src="img/imagen5.jpg" alt="Trabajo 3" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/imagen6.jpg" alt="Trabajo 5" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/imagen7.jpg" alt="Trabajo 6" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/imagen8.jpg" alt="Trabajo 7" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/imagen9.jpg" alt="Trabajo 7" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/imagen10.jpg" alt="Trabajo 7" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-27 a las 09.02.25_1d95b30d.webp" alt="Trabajo 8" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-20 a las 22.37.24_21aa2176.webp" alt="Trabajo 9" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/imagen13.jpg" alt="Trabajo 9" width="1200" height="1600">
-    <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-20 a las 08.03.25_879fe14e.webp" alt="Trabajo 1" width="1200" height="1600">
-  </div>
+        <img loading="lazy" decoding="async" src="img/imagen1.jpg" alt="Trabajo 1" width="1200" height="1600">
+        <img loading="lazy" decoding="async" src="img/imagen2.jpg" alt="Trabajo 2" width="1200" height="1600">
+        <img loading="lazy" decoding="async" src="img/imagen3.jpg" alt="Trabajo 3" width="1200" height="1600">
+        <img loading="lazy" decoding="async" src="img/imagen4.jpg" alt="Trabajo 4" width="861" height="1080">
+        <img loading="lazy" decoding="async" src="img/imagen5.jpg" alt="Trabajo 3" width="1200" height="1600">
+        <img loading="lazy" decoding="async" src="img/imagen6.jpg" alt="Trabajo 5" width="1200" height="1600">
+        <img loading="lazy" decoding="async" src="img/imagen7.jpg" alt="Trabajo 6" width="1200" height="1600">
+        <img loading="lazy" decoding="async" src="img/imagen8.jpg" alt="Trabajo 7" width="1200" height="1600">
+        <img loading="lazy" decoding="async" src="img/imagen9.jpg" alt="Trabajo 7" width="1200" height="1600">
+        <img loading="lazy" decoding="async" src="img/imagen10.jpg" alt="Trabajo 7" width="1200" height="1600">
+        <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-27 a las 09.02.25_1d95b30d.webp" alt="Trabajo 8" width="1200" height="1600">
+        <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-20 a las 22.37.24_21aa2176.webp" alt="Trabajo 9" width="1200" height="1600">
+        <img loading="lazy" decoding="async" src="img/imagen13.jpg" alt="Trabajo 9" width="1200" height="1600">
+        <img loading="lazy" decoding="async" src="img/opt/Imagen de WhatsApp 2025-08-20 a las 08.03.25_879fe14e.webp" alt="Trabajo 1" width="1200" height="1600">
+      </div>
+    </div>
   </section>
 
   <!-- EXPERIENCIA -->
@@ -311,40 +485,343 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>AOS.init();</script>
 
-  <!-- Botón de WhatsApp -->
+  <!-- Botón de WhatsApp con logo completo -->
 <a href="https://wa.me/573145693906?text=Hola%20PROSMEC,%20me%20gustaría%20obtener%20más%20información."
    class="whatsapp-float"
    target="_blank"
    title="Contáctanos por WhatsApp"
    aria-label="WhatsApp PROSMEC">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="white">
-    <path d="M19.11 17.64c-.31-.15-1.84-.9-2.12-1-.29-.1-.5-.15-.71.15-.21.31-.81 1-.99 1.21-.18.21-.37.23-.68.08-.31-.15-1.31-.48-2.5-1.53-.92-.82-1.54-1.84-1.72-2.15-.18-.31-.02-.48.13-.63.13-.13.31-.34.47-.5.15-.18.21-.31.31-.52.1-.21.05-.39-.03-.55-.08-.15-.71-1.72-.97-2.36-.26-.63-.52-.55-.71-.56h-.61c-.21 0-.55.08-.84.39-.29.31-1.1 1.08-1.1 2.63s1.13 3.05 1.29 3.26c.15.21 2.23 3.4 5.39 4.77.75.32 1.34.51 1.8.65.76.24 1.45.21 2 .13.61-.09 1.84-.75 2.1-1.48.26-.73.26-1.35.18-1.48-.08-.13-.28-.21-.59-.36zM16.02 3c-7.17 0-13 5.83-13 13 0 2.29.6 4.54 1.75 6.53L3 29l6.66-1.74c1.91 1.04 4.06 1.59 6.36 1.59h.01c7.17 0 13-5.83 13-13 0-3.48-1.36-6.76-3.83-9.22C22.78 4.36 19.5 3 16.02 3zm0 23.91c-1.98 0-3.92-.53-5.61-1.54l-.4-.23-3.95 1.03 1.06-3.85-.26-.39c-1.09-1.67-1.67-3.62-1.67-5.62 0-5.74 4.67-10.41 10.41-10.41 2.78 0 5.38 1.08 7.34 3.04 1.96 1.96 3.04 4.56 3.04 7.34 0 5.74-4.67 10.41-10.41 10.41z"/>
-  </svg>
+  <img src="img/LOGO DE WHATSAP.png" alt="WhatsApp PROSMEC">
 </a>
 
 <style>
-.whatsapp-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #25D366;
-  color: white;
+  .whatsapp-float {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 95px;   /* 🔥 aumenta el tamaño */
+    height: 95px;  /* 🔥 aumenta el tamaño */
+    border-radius: 50%;
+    overflow: hidden;
+    background: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    z-index: 99999;
+    transition: transform 0.25s ease;
+  }
+
+  .whatsapp-float:hover {
+    transform: scale(1.1);
+  }
+
+  .whatsapp-float img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+  }
+
+  /* 🔹 Opcional: para pantallas pequeñas (ajusta automático) */
+  @media (max-width: 600px) {
+    .whatsapp-float {
+      width: 70px;
+      height: 70px;
+      bottom: 20px;
+      right: 20px;
+    }
+  }
+  .whatsapp-float img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  z-index: 9999;
+  display: block;
+  background: none;
+  transform: scale(1.2); /* 🔥 fuerza a que la imagen se expanda un poco más */
 }
 
-.whatsapp-float:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
-}
+</style>
+
+
+
+  <!-- ======= ASISTENTE (HTML) ======= -->
+  <div id="asistente-prosmec" aria-live="polite" aria-atomic="true">
+    <!-- Botón (icono) — primero a la izquierda -->
+    <button id="bot-toggle" aria-label="Abrir asistente" title="Asistente PROSMEC">
+      <!-- usa IA.png como pediste -->
+      <img src="img/IA.png" alt="Asistente PROSMEC">
+    </button>
+
+    <!-- Mensaje flotante tipo nube (clarito) -->
+    <div id="bot-hint" role="status">
+      👋 Hola — ¿Necesitas ayuda? Puedo mostrar servicios, contacto o ubicación.
+    </div>
+
+    <!-- Widget completo (oculto hasta abrir) -->
+    <div id="chat-widget" role="dialog" aria-label="Chat Asistente PROSMEC">
+      <div id="chat-header">
+        <div class="chat-title">👷‍♂️ Asistente PROSMEC</div>
+        <button id="chat-close" aria-label="Cerrar chat">&times;</button>
+      </div>
+
+      <div id="chat-body">
+        <div class="bot-msg">¡Hola! Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?</div>
+      </div>
+
+      <div id="chat-options" aria-hidden="false">
+        <button class="chat-btn" onclick="sendOption('Servicios')">Servicios</button>
+        <button class="chat-btn" onclick="sendOption('Contactar')">Contacto</button>
+        <button class="chat-btn" onclick="sendOption('Ubicación')">Ubicación</button>
+        <button class="chat-btn" onclick="sendOption('Cotización')">Cotización</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript del asistente (autónomo, sin reemplazar tu js/main.js) -->
+  <script>
+    (function(){
+      const botToggle = document.getElementById('bot-toggle');
+      const botHint = document.getElementById('bot-hint');
+      const chatWidget = document.getElementById('chat-widget');
+      const chatClose = document.getElementById('chat-close');
+      const chatBody = document.getElementById('chat-body');
+
+      // Estado (cerrado por defecto)
+      let open = false;
+
+      // click en el icono -> abrir/cerrar widget; también ocultar hint cuando se abre
+      botToggle.addEventListener('click', function(e){
+        open = !open;
+        if(open){
+          chatWidget.classList.add('open');
+          botHint.style.display = 'none';
+          // focus accesible al chat
+          chatWidget.setAttribute('tabindex','-1');
+          chatWidget.focus();
+        } else {
+          chatWidget.classList.remove('open');
+          // mostrar de nuevo hint (con ligero retardo para que no parpadee)
+          setTimeout(()=> botHint.style.display = '', 120);
+        }
+      });
+
+      // cerrar con el botón X
+      chatClose.addEventListener('click', function(){
+        open = false;
+        chatWidget.classList.remove('open');
+        setTimeout(()=> botHint.style.display = '', 120);
+      });
+
+      // cerrar con tecla Escape por accesibilidad
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && open){
+          open = false;
+          chatWidget.classList.remove('open');
+          setTimeout(()=> botHint.style.display = '', 120);
+        }
+      });
+
+      // función que simula respuestas rápidas (puedes conectarla a tu backend después)
+      window.sendOption = function(opt){
+        // mostrar en el chat
+        const userDiv = document.createElement('div');
+        userDiv.className = 'user-msg';
+        userDiv.textContent = opt;
+        chatBody.appendChild(userDiv);
+
+        // respuesta simulada
+        setTimeout(()=> {
+          const botDiv = document.createElement('div');
+          botDiv.className = 'bot-msg';
+          if(opt === 'Servicios'){
+            botDiv.innerHTML = 'Ofrecemos mecanizado, soldadura, corte y mantenimiento industrial. ¿Quieres ver nuestros servicios?';
+          } else if(opt === 'Contactar'){
+            botDiv.innerHTML = 'Puedes llamarnos a <a href="tel:+573145693906">+57 314 569 3906</a> o escribir a <a href="mailto:prosmecsas@gmail.com">prosmecsas@gmail.com</a>.';
+          } else if(opt === 'Ubicación'){
+            botDiv.innerHTML = 'Nos encuentras en Cra 48 # 44-48. <a target="_blank" href="https://www.google.com/maps/search/?api=1&query=Carrera+48+%23+44-48">Ver mapa</a>';
+          } else if(opt === 'Cotización'){
+            botDiv.innerHTML = 'Para cotizaciones, por favor envíanos detalles del producto/servicio y te responderemos con tiempos y costos estimados.';
+          } else {
+            botDiv.innerHTML = 'Estoy aquí para ayudar. ¿Qué necesitas?';
+          }
+          chatBody.appendChild(botDiv);
+          // mantener scroll abajo
+          chatBody.scrollTop = chatBody.scrollHeight;
+        }, 450);
+        // mantener scroll abajo al agregar user
+        chatBody.scrollTop = chatBody.scrollHeight;
+      };
+    })();
+  </script>
+
+  <script src="js/asistente.js"></script>
+
+  <style>
+  /* ========== ASISTENTE PROSMEC MEJORADO ========== */
+  #asistente-prosmec {
+    position: fixed;
+    bottom: 100px;
+    left: 25px;
+    z-index: 99999;
+    display: flex;
+    align-items: center; /* ✅ mensaje a la derecha del ícono */
+    gap: 10px;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+  }
+
+  #bot-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    overflow: hidden;
+    padding: 0;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+
+  #bot-toggle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #bot-toggle:hover {
+    transform: scale(1.07);
+  }
+
+  /* 💬 Burbuja de mensaje más clara y tipo “nube” */
+  #bot-hint {
+    background: rgba(255, 255, 255, 0.92);
+    color: #222;
+    border-radius: 15px 15px 15px 0; /* forma de nube */
+    padding: 12px 16px;
+    font-size: 15px;
+    line-height: 1.4;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    max-width: 230px;
+    border: 1px solid rgba(0,0,0,0.1);
+    position: relative;
+  }
+
+  /* Triángulo tipo "nube" apuntando al avatar */
+  #bot-hint::before {
+    content: "";
+    position: absolute;
+    left: -8px;
+    bottom: 12px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent rgba(255,255,255,0.92) transparent transparent;
+  }
+
+  @keyframes hintFloat {
+    from { transform: translateY(0); }
+    to { transform: translateY(-4px); }
+  }
+</style>
+
+
+
+  <!-- BOTÓN SUBIR BONITO DERECHA -->
+<style>
+  #btnTop {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #002b5b, #0656b2);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 26px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    z-index: 99999;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  #btnTop:hover {
+    transform: translateY(-6px) scale(1.08);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+  }
+
+  #btnTop span {
+    transform: translateY(-1px);
+    font-weight: bold;
+  }
+</style>
+
+<button id="btnTop" title="Volver arriba">
+  <span>↑</span>
+</button>
+
+<script>
+  // Mostrar botón cuando bajen la página
+  window.addEventListener("scroll", () => {
+    const btn = document.getElementById("btnTop");
+    if (window.scrollY > 350) {
+      btn.style.display = "flex";
+    } else {
+      btn.style.display = "none";
+    }
+  });
+
+  // Acción al hacer clic
+  document.getElementById("btnTop").addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+</script>
+
+<style>
+  /* Hace que TODAS las imágenes se adapten bien en cualquier pantalla */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Evita que elementos se desborden horizontalmente */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Ajusta contenedores grandes para celular */
+  .container, .footer-cols, .header-inner {
+    max-width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  /* Galería responsive real sin desbordes */
+  .grid-galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+  }
+
+  /* Texto y botones se ajustan mejor en pantallas pequeñas */
+  @media (max-width: 600px) {
+    h1, h2, h3, h4 {
+      text-align: center;
+    }
+    nav a {
+      font-size: 1rem;
+    }
+    .hero {
+      height: auto;
+      padding: 50px 20px;
+    }
+  }
 </style>
 
 </body>
