@@ -147,7 +147,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Mensaje enviado */
+    /* Mensaje enviado (texto dentro del formulario) */
     #formMsg {
       display: none;
       font-weight: 600;
@@ -161,10 +161,108 @@
         padding: 60px 20px;
       }
     }
+
+
+    /* ================= ALERTA SUPERIOR (BANNER) =================
+       Esta es la alerta que aparece arriba del navegador cuando el
+       formulario se envía. No elimina nada de tu estructura; solo
+       añade un contenedor fijo y su comportamiento. */
+    .top-alert {
+      position: fixed;
+      top: -100px; /* comienza oculta arriba */
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      max-width: 1100px;
+      background: linear-gradient(90deg, #28a745, #20a94b);
+      color: white;
+      padding: 14px 20px;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      z-index: 200000; /* muy por encima para que se vea */
+      transition: transform 350ms cubic-bezier(.22,1,.36,1), top 350ms ease;
+      transform: translateY(-12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-12px);
+    }
+
+    .top-alert.show {
+      top: 18px;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .top-alert .alert-text {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    .top-alert .alert-close {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: white;
+      padding: 8px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .top-alert .alert-close:focus {
+      outline: 2px solid rgba(255,255,255,0.3);
+    }
+
+    /* Icono */
+    .top-alert .icon {
+      background: rgba(255,255,255,0.12);
+      padding: 6px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 36px;
+      min-height: 36px;
+    }
+
+    /* pequeño ajuste para pantallas chicas */
+    @media (max-width: 520px) {
+      .top-alert {
+        left: 8px;
+        right: 8px;
+        max-width: none;
+        border-radius: 10px;
+      }
+      .top-alert .alert-text {
+        font-size: 14px;
+      }
+    }
+
   </style>
 </head>
 
 <body>
+  <!-- ALERTA SUPERIOR: se inyecta pero está oculta hasta que se envía el formulario -->
+  <div id="topAlert" class="top-alert" role="status" aria-live="polite" aria-atomic="true" style="display:none;">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <div class="icon" aria-hidden="true">
+        <!-- icono check -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="alert-text">
+        <span id="topAlertText">✅ Mensaje enviado correctamente.</span>
+      </div>
+    </div>
+    <div>
+      <button id="topAlertClose" class="alert-close" aria-label="Cerrar notificación">Cerrar ✕</button>
+    </div>
+  </div>
+
   <!-- === HEADER ORIGINAL === -->
   <header class="header">
     <div class="container header-inner">
@@ -212,7 +310,7 @@
             </form>
           </div>
         </div>
-
+      
         <!-- INFORMACIÓN -->
         <div class="col-lg-6">
           <div class="info-box">
@@ -259,73 +357,130 @@
 
   <!-- === SCRIPT DE ENVÍO SIMULADO === -->
   <script>
-    const form = document.getElementById("formContact");
-    const msg = document.getElementById("formMsg");
-    form.addEventListener("submit", e => {
-      e.preventDefault();
-      msg.style.display = "block";
-      form.reset();
-    });
+    (function(){
+      // elementos
+      const form = document.getElementById("formContact");
+      const msg = document.getElementById("formMsg");
+      const topAlert = document.getElementById("topAlert");
+      const topAlertText = document.getElementById("topAlertText");
+      const topAlertClose = document.getElementById("topAlertClose");
+      let alertTimeout = null;
+
+      // Mostrar alerta superior
+      function showTopAlert(text, autoHide = true, ms = 4200) {
+        topAlertText.textContent = "✅ " + text;
+        topAlert.style.display = "flex";
+        // Force reflow to allow transition (ensures class toggle animates)
+        void topAlert.offsetWidth;
+        topAlert.classList.add("show");
+        // auto hide si se quiere
+        if (alertTimeout) clearTimeout(alertTimeout);
+        if (autoHide) {
+          alertTimeout = setTimeout(() => hideTopAlert(), ms);
+        }
+      }
+
+      // Ocultar alerta superior
+      function hideTopAlert() {
+        topAlert.classList.remove("show");
+        // esperar la transición antes de esconder completamente
+        setTimeout(() => {
+          topAlert.style.display = "none";
+        }, 400);
+        if (alertTimeout) {
+          clearTimeout(alertTimeout);
+          alertTimeout = null;
+        }
+      }
+
+      // cierre manual
+      topAlertClose.addEventListener("click", hideTopAlert);
+
+      // Comportamiento de envío del formulario
+      form.addEventListener("submit", e => {
+        // Evitamos envío real para demo/simulador (como ya tenías)
+        e.preventDefault();
+
+        // mostramos mensaje interno (si lo usas)
+        msg.style.display = "block";
+
+        // mostramos la alerta superior (texto personalizado)
+        showTopAlert("Tu mensaje ha sido enviado correctamente. ¡Gracias por contactarnos!");
+
+        // reset del formulario
+        form.reset();
+
+        // (Opcional) si en el servidor procesar_contacto.php vas a usar AJAX real,
+        // en ese caso debes quitar el e.preventDefault() y manejar respuesta del servidor.
+      });
+
+      // Accessibility: permitir cerrar la alerta con Escape cuando está visible
+      document.addEventListener("keydown", function(ev){
+        if (ev.key === "Escape" && topAlert.classList.contains("show")) {
+          hideTopAlert();
+        }
+      });
+
+    })();
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Botón de WhatsApp con logo completo -->
-<a href="https://wa.me/573145693906?text=Hola%20PROSMEC,%20me%20gustaría%20obtener%20más%20información."
-   class="whatsapp-float"
-   target="_blank"
-   title="Contáctanos por WhatsApp"
-   aria-label="WhatsApp PROSMEC">
-  <img src="img/LOGO DE WHATSAP.png" alt="WhatsApp PROSMEC">
-</a>
+  <a href="https://wa.me/573145693906?text=Hola%20PROSMEC,%20me%20gustaría%20obtener%20más%20información."
+     class="whatsapp-float"
+     target="_blank"
+     title="Contáctanos por WhatsApp"
+     aria-label="WhatsApp PROSMEC">
+    <img src="img/LOGO DE WHATSAP.png" alt="WhatsApp PROSMEC">
+  </a>
 
-<style>
-  .whatsapp-float {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    width: 95px;   /* 🔥 aumenta el tamaño */
-    height: 95px;  /* 🔥 aumenta el tamaño */
-    border-radius: 50%;
-    overflow: hidden;
-    background: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    z-index: 99999;
-    transition: transform 0.25s ease;
-  }
-
-  .whatsapp-float:hover {
-    transform: scale(1.1);
-  }
-
-  .whatsapp-float img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    display: block;
-  }
-
-  /* 🔹 Opcional: para pantallas pequeñas (ajusta automático) */
-  @media (max-width: 600px) {
+  <style>
     .whatsapp-float {
-      width: 70px;
-      height: 70px;
-      bottom: 20px;
-      right: 20px;
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 95px;   /* 🔥 aumenta el tamaño */
+      height: 95px;  /* 🔥 aumenta el tamaño */
+      border-radius: 50%;
+      overflow: hidden;
+      background: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      z-index: 99999;
+      transition: transform 0.25s ease;
     }
-  }
-  .whatsapp-float img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
-  background: none;
-  transform: scale(1.2); /* 🔥 fuerza a que la imagen se expanda un poco más */
-}
 
-</style>
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+    }
+
+    .whatsapp-float img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+
+    /* 🔹 Opcional: para pantallas pequeñas (ajusta automático) */
+    @media (max-width: 600px) {
+      .whatsapp-float {
+        width: 70px;
+        height: 70px;
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+    .whatsapp-float img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+      background: none;
+      transform: scale(1.2); /* 🔥 fuerza a que la imagen se expanda un poco más */
+    }
+  </style>
 
   <!-- ======= ASISTENTE (HTML) ======= -->
   <div id="asistente-prosmec" aria-live="polite" aria-atomic="true">
@@ -440,266 +595,250 @@
   <script src="js/asistente.js"></script>
 
   <style>
-  /* ========== ESTILOS ASISTENTE PROSMEC ========== */
-  #asistente-prosmec {
-    position: fixed;
-    bottom: 100px;
-    left: 25px; /* 👈 posición exacta esquina inferior izquierda */
-    z-index: 99999;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-  }
-
-  #bot-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    overflow: hidden;
-    padding: 0;
-    transition: transform 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  }
-
-  #bot-toggle img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  #bot-toggle:hover {
-    transform: scale(1.07);
-  }
-
-  #bot-hint {
-    background: rgba(255,255,255,0.95);
-    color: #333;
-    border-radius: 10px;
-    padding: 10px 14px;
-    font-size: 14px;
-    max-width: 220px;
-    line-height: 1.3;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-    border-left: 4px solid #28a745;
-    animation: hintFloat 5s ease-in-out infinite alternate;
-  }
-
-  @keyframes hintFloat {
-    from { transform: translateY(0); }
-    to { transform: translateY(-4px); }
-  }
-
-  #chat-widget {
-    display: none;
-    position: fixed;
-    bottom: 175px;
-    left: 25px;
-    width: 300px;
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 6px 25px rgba(0,0,0,0.35);
-    overflow: hidden;
-    flex-direction: column;
-    animation: fadeInUp 0.35s ease forwards;
-  }
-
-  #chat-widget.open {
-    display: flex;
-  }
-
-  #chat-header {
-    background: linear-gradient(135deg, #003366, #0a65b1);
-    color: #fff;
-    padding: 10px 14px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-weight: 600;
-  }
-
-  #chat-close {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 20px;
-    cursor: pointer;
-  }
-
-  #chat-body {
-    max-height: 220px;
-    overflow-y: auto;
-    padding: 10px;
-    font-size: 14px;
-  }
-
-  .bot-msg {
-    background: #f0f0f0;
-    margin: 6px 0;
-    padding: 8px 12px;
-    border-radius: 10px;
-    max-width: 85%;
-  }
-
-  .user-msg {
-    background: #d0ebff;
-    align-self: flex-end;
-    margin: 6px 0;
-    padding: 8px 12px;
-    border-radius: 10px;
-    max-width: 85%;
-  }
-
-  #chat-options {
-    padding: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    justify-content: center;
-    background: #f9f9f9;
-  }
-
-  .chat-btn {
-    background: #0056b3;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 10px;
-    cursor: pointer;
-    font-size: 13px;
-    transition: background 0.25s ease;
-  }
-
-  .chat-btn:hover {
-    background: #007bff;
-  }
-
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* responsive */
-  @media (max-width: 500px) {
-    #chat-widget {
-      width: 90%;
-      left: 5%;
-      bottom: 120px;
+    /* ========== ESTILOS ASISTENTE PROSMEC ========== */
+    #asistente-prosmec {
+      position: fixed;
+      bottom: 100px;
+      left: 25px; /* 👈 posición exacta esquina inferior izquierda */
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
     }
-  }
-</style>
 
+    #bot-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      overflow: hidden;
+      padding: 0;
+      transition: transform 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    #bot-toggle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #bot-toggle:hover {
+      transform: scale(1.07);
+    }
+
+    #bot-hint {
+      background: rgba(255,255,255,0.95);
+      color: #333;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 14px;
+      max-width: 220px;
+      line-height: 1.3;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+      border-left: 4px solid #28a745;
+      animation: hintFloat 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes hintFloat {
+      from { transform: translateY(0); }
+      to { transform: translateY(-4px); }
+    }
+
+    #chat-widget {
+      display: none;
+      position: fixed;
+      bottom: 175px;
+      left: 25px;
+      width: 300px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.35);
+      overflow: hidden;
+      flex-direction: column;
+      animation: fadeInUp 0.35s ease forwards;
+    }
+
+    #chat-widget.open {
+      display: flex;
+    }
+
+    #chat-header {
+      background: linear-gradient(135deg, #003366, #0a65b1);
+      color: #fff;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 600;
+    }
+
+    #chat-close {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    #chat-body {
+      max-height: 220px;
+      overflow-y: auto;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    .bot-msg {
+      background: #f0f0f0;
+      margin: 6px 0;
+      padding: 8px 12px;
+      border-radius: 10px;
+      max-width: 85%;
+    }
+
+    .user-msg {
+      background: #d0ebff;
+      align-self: flex-end;
+      margin: 6px 0;
+      padding: 8px 12px;
+      border-radius: 10px;
+      max-width: 85%;
+    }
+
+    #chat-options {
+      padding: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      background: #f9f9f9;
+    }
+
+    .chat-btn {
+      background: #0056b3;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: background 0.25s ease;
+    }
+
+    .chat-btn:hover {
+      background: #007bff;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* responsive */
+    @media (max-width: 500px) {
+      #chat-widget {
+        width: 90%;
+        left: 5%;
+        bottom: 120px;
+      }
+    }
+  </style>
 
   <!-- BOTÓN SUBIR BONITO DERECHA -->
-<style>
-  #btnTop {
-    position: fixed;
-    bottom: 100px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #002b5b, #0656b2);
-    border: none;
-    border-radius: 50%;
-    color: white;
-    font-size: 26px;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
-    z-index: 99999;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-
-  #btnTop:hover {
-    transform: translateY(-6px) scale(1.08);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
-  }
-
-  #btnTop span {
-    transform: translateY(-1px);
-    font-weight: bold;
-  }
-</style>
-
-<button id="btnTop" title="Volver arriba">
-  <span>↑</span>
-</button>
-
-<script>
-  // Mostrar botón cuando bajen la página
-  window.addEventListener("scroll", () => {
-    const btn = document.getElementById("btnTop");
-    if (window.scrollY > 350) {
-      btn.style.display = "flex";
-    } else {
-      btn.style.display = "none";
+  <style>
+    #btnTop {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #002b5b, #0656b2);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 26px;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+      z-index: 99999;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
-  });
 
-  // Acción al hacer clic
-  document.getElementById("btnTop").addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
+    #btnTop:hover {
+      transform: translateY(-6px) scale(1.08);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+    }
+
+    #btnTop span {
+      transform: translateY(-1px);
+      font-weight: bold;
+    }
+  </style>
+
+  <button id="btnTop" title="Volver arriba">
+    <span>↑</span>
+  </button>
+
+  <script>
+    // Mostrar botón cuando bajen la página
+    window.addEventListener("scroll", () => {
+      const btn = document.getElementById("btnTop");
+      if (window.scrollY > 350) {
+        btn.style.display = "flex";
+      } else {
+        btn.style.display = "none";
+      }
     });
-  });
-</script>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-/* Variables que se adaptan al tamaño real del dispositivo */
-:root {
-    --vw: 1vw;
-    --vh: 1vh;
-}
+    // Acción al hacer clic
+    document.getElementById("btnTop").addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+  </script>
 
-/* Ejemplo: si tienes contenedores de ancho completo */
-.full-screen {
-    width: calc(var(--vw) * 100);
-    height: calc(var(--vh) * 100);
-}
-
-/* Esto asegura que la página se vea bien en computadoras, tablets y celulares */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    box-sizing: border-box;
-}
-* {
-    box-sizing: inherit;
-}
-</style>
-</head>
-
-<body>
-
-<!-- TU CONTENIDO AQUI -->
-
-
-<!-- Código para adaptar la página en todos los dispositivos -->
-<script>
-(function() {
-    function ajustar() {
-        document.documentElement.style.setProperty('--vw', (window.innerWidth * 0.01) + 'px');
-        document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
+  <!-- Código para adaptar variables -- sólo funciona bien si se carga una vez -->
+  <style>
+    /* Variables que se adaptan al tamaño real del dispositivo */
+    :root {
+        --vw: 1vw;
+        --vh: 1vh;
     }
-    ajustar();
-    window.addEventListener('resize', ajustar);
-})();
-</script>
-</body>
-</html>
+
+    .full-screen {
+        width: calc(var(--vw) * 100);
+        height: calc(var(--vh) * 100);
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        box-sizing: border-box;
+    }
+    * {
+        box-sizing: inherit;
+    }
+  </style>
+
+  <script>
+    (function() {
+        function ajustar() {
+            document.documentElement.style.setProperty('--vw', (window.innerWidth * 0.01) + 'px');
+            document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
+        }
+        ajustar();
+        window.addEventListener('resize', ajustar);
+    })();
+  </script>
 
 </body>
 </html>
